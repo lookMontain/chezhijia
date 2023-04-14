@@ -166,8 +166,8 @@ export default {
       const bodyWrapper = table.bodyWrapper
       const target = document.getElementById('1' + id)
       const top = this.getElementTop(target)
-      
-      bodyWrapper.scrollTo(0, top - 255-(indext*43)+20);
+      const mScrollTop=document.getElementById('menuBox').scrollTop
+      bodyWrapper.scrollTo(0, top - 255-(indext*43)+20+mScrollTop-2);
       // var scrollPosition = target.offsetTop - height + target.clientHeight;
       // table.scrollToRow(index);
       // table.scrollToRow(lastRowIndex, scrollPosition);
