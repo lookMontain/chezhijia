@@ -2,13 +2,22 @@
   <div class="content">
     <el-table ref="singleTable" :height="getHeight()" :data="targetArr" :show-header="true" :span-method="arraySpanMethod"
       border style="width: 100%" :cell-style="rowStyle" :header-cell-style="headerCellStyle">
-      <el-table-column prop="00" align="center" width="180">
+      <el-table-column prop="00" align="center" width="180" fixed>
         <template slot="header" slot-scope="scope">
           <div>车型</div>
         </template>
         <template slot-scope="scope">
-          <div :id="getId(scope.row[scope.column.property])" @click="showDetail(scope.row, scope.column.property)">{{
-            scope.row[scope.column.property] }}</div>
+          <div :id="getId(scope.row[scope.column.property])">
+            <template v-if="handleGroupRow(scope.$index)">
+              <el-tag type="success" style="font-size: 16px;font-weight: 600;">
+                {{ scope.row[scope.column.property] }}
+              </el-tag>
+            </template>
+            <template v-else>
+              <el-link type="primary" @click="showDetail(scope.row, scope.column.property)">  {{ scope.row[scope.column.property] }}</el-link>
+            </template>
+
+          </div>
         </template>
       </el-table-column>
       <el-table-column v-for="item in clumnArr" :key="item" :prop="String(item)" align="center" min-width="180">
@@ -40,7 +49,7 @@
         </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">关闭窗口</el-button>
+        <el-button type="primary" size="mini" @click="dialogVisible = false">关闭窗口</el-button>
       </span>
     </el-dialog>
   </div>
@@ -74,7 +83,7 @@ export default {
       {
         label: '功能可靠',
         prop: '功能可靠'
-      },{
+      }, {
         label: '使用安全',
         prop: '使用安全'
       }],
@@ -92,15 +101,16 @@ export default {
           '功能丰富': '2',
           逻辑合理: '3',
         }],
-        clumnArr2:[],
-        targetArr2:[],
-        dialogTitle:'详情'
+      clumnArr2: [],
+      targetArr2: [],
+      dialogTitle: '详情'
     }
   },
   watch: {
     contrast: {
       handler () {
         this.getChangeData()
+
       },
       immediate: true
     }
@@ -109,27 +119,27 @@ export default {
     this.getChangeData()
   },
   methods: {
-     randomNumBoth (Min = 10, Max = 500) {
-    var Range = Max - Min;
-    var Rand = Math.random();
-    var num = Min + Math.round(Rand * Range); //四舍五入
-    return num;
-},
+    randomNumBoth (Min = 10, Max = 500) {
+      var Range = Max - Min;
+      var Rand = Math.random();
+      var num = Min + Math.round(Rand * Range); //四舍五入
+      return num;
+    },
     handleClose () {
       this.dialogVisible = false
     },
     showDetail (row, perty) {
       console.log(row, perty)
-      this.dialogTitle= row[perty]
+      this.dialogTitle = row[perty]
       const list = this.contrast.map(item => {
         return {
           ...item,
-          '功能丰富': this.randomNumBoth(1,9),
-          '逻辑合理':  this.randomNumBoth(1,9),
-          '交互便捷': this.randomNumBoth(1,9),
-          '视觉美观':  this.randomNumBoth(1,9),
-          '功能可靠':  this.randomNumBoth(1,9),
-          '使用安全':  this.randomNumBoth(1,9),
+          '功能丰富': this.randomNumBoth(1, 9),
+          '逻辑合理': this.randomNumBoth(1, 9),
+          '交互便捷': this.randomNumBoth(1, 9),
+          '视觉美观': this.randomNumBoth(1, 9),
+          '功能可靠': this.randomNumBoth(1, 9),
+          '使用安全': this.randomNumBoth(1, 9),
 
         }
       })
@@ -140,7 +150,7 @@ export default {
     },
     getHeight () {
       const innerHeight = window.innerHeight
-      return innerHeight - 200
+      return innerHeight - 150
     },
     getElementTop (element) {
       var actualTop = element.offsetTop;
@@ -151,15 +161,13 @@ export default {
       }
       return actualTop;
     },
-    scorll (id) {
+    scorll (id,indext) {
       var table = this.$refs.singleTable;
-      var height = table.$el.querySelector('.el-table__body-wrapper').clientHeight;
-      var lastRowIndex = this.targetArr.length - 1;
-      const index = this.column.findIndex(item => item.prop == id)
       const bodyWrapper = table.bodyWrapper
       const target = document.getElementById('1' + id)
       const top = this.getElementTop(target)
-      bodyWrapper.scrollTo(0, top - 255);
+      
+      bodyWrapper.scrollTo(0, top - 255-(indext*43)+20);
       // var scrollPosition = target.offsetTop - height + target.clientHeight;
       // table.scrollToRow(index);
       // table.scrollToRow(lastRowIndex, scrollPosition);
@@ -192,7 +200,12 @@ export default {
       if (this.handleGroupRow(row.rowIndex)) {
         return {
           'text-align': 'left',
-          background: '#efefef'
+          background: '#efefef',
+          padding:'5px 0'
+        }
+      }else{
+        return {
+          padding:'5px 0'
         }
       }
     },
@@ -245,6 +258,9 @@ export default {
 
       this.targetArr = targetArr
       this.clumnArr = clumnArr
+      this.$nextTick(()=>{
+        this.$refs.singleTable.doLayout()
+      })
     },
     getChangeData2 () {
       const clumnArr = [...new Array(this.contrast2.length).keys()] // 改变数据，根据数据的长度生成数组，作为table的column的prop
