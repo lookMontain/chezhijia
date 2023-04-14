@@ -7,10 +7,10 @@
           <div>车型</div>
         </template>
         <template slot-scope="scope">
-          <span :id="getId(scope.row[scope.column.property])">{{ scope.row[scope.column.property] }}</span>
+          <div :id="getId(scope.row[scope.column.property])" @click="showDetail(scope.row, scope.column.property)">{{
+            scope.row[scope.column.property] }}</div>
         </template>
       </el-table-column>
-
       <el-table-column v-for="item in clumnArr" :key="item" :prop="String(item)" align="center" min-width="180">
         <template slot="header" slot-scope="scope">
           <div>{{ handleTitle(scope.column.property) }}</div>
@@ -23,6 +23,26 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="90%" :before-close="handleClose">
+      <el-table ref="singleTable2" :height="400" :data="targetArr2" :show-header="true" border style="width: 100%">
+        <el-table-column prop="00" align="center" width="180">
+          <template slot="header" slot-scope="scope">
+            <div>车型</div>
+          </template>
+        </el-table-column>
+        <el-table-column v-for="item in clumnArr2" :key="item" :prop="String(item)" align="center" min-width="180">
+          <template slot="header" slot-scope="scope">
+            <div>{{ handleTitle(scope.column.property) }}</div>
+          </template>
+          <template slot-scope="scope">
+            <span>{{ scope.row[scope.column.property] }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">关闭窗口</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
   
@@ -34,7 +54,47 @@ export default {
     return {
       targetArr: [],
       clumnArr: [],
-      listTwoRow: [0, 7, 10]
+      dialogVisible: false,
+      column2: [{
+        label: '功能丰富',
+        prop: '功能丰富',
+      },
+      {
+        label: '逻辑合理',
+        prop: '逻辑合理'
+      },
+      {
+        label: '交互便捷',
+        prop: '交互便捷',
+      },
+      {
+        label: '视觉美观',
+        prop: '视觉美观'
+      },
+      {
+        label: '功能可靠',
+        prop: '功能可靠'
+      },{
+        label: '使用安全',
+        prop: '使用安全'
+      }],
+      contrast2: [
+        {
+          "name": "星越L",
+          label: '星越L',
+          '功能丰富': '2',
+          逻辑合理: '3',
+        },
+
+        {
+          "name": "岚图Free",
+          label: '岚图Free',
+          '功能丰富': '2',
+          逻辑合理: '3',
+        }],
+        clumnArr2:[],
+        targetArr2:[],
+        dialogTitle:'详情'
     }
   },
   watch: {
@@ -49,9 +109,38 @@ export default {
     this.getChangeData()
   },
   methods: {
-    getHeight(){
-     const innerHeight= window.innerHeight
-     return innerHeight-200
+     randomNumBoth (Min = 10, Max = 500) {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    var num = Min + Math.round(Rand * Range); //四舍五入
+    return num;
+},
+    handleClose () {
+      this.dialogVisible = false
+    },
+    showDetail (row, perty) {
+      console.log(row, perty)
+      this.dialogTitle= row[perty]
+      const list = this.contrast.map(item => {
+        return {
+          ...item,
+          '功能丰富': this.randomNumBoth(1,9),
+          '逻辑合理':  this.randomNumBoth(1,9),
+          '交互便捷': this.randomNumBoth(1,9),
+          '视觉美观':  this.randomNumBoth(1,9),
+          '功能可靠':  this.randomNumBoth(1,9),
+          '使用安全':  this.randomNumBoth(1,9),
+
+        }
+      })
+      this.contrast2 = list
+      this.getChangeData2()
+      this.dialogVisible = true
+
+    },
+    getHeight () {
+      const innerHeight = window.innerHeight
+      return innerHeight - 200
     },
     getElementTop (element) {
       var actualTop = element.offsetTop;
@@ -156,6 +245,47 @@ export default {
 
       this.targetArr = targetArr
       this.clumnArr = clumnArr
+    },
+    getChangeData2 () {
+      const clumnArr = [...new Array(this.contrast2.length).keys()] // 改变数据，根据数据的长度生成数组，作为table的column的prop
+      const targetArr = [] // 数据数组
+      /**
+       * 下面则是将原数组转为合适数据
+      */
+      const tableData = []
+      let objKey = []
+
+      // 第一步将原数组中对象的key变为左侧需要展示的文字
+      this.contrast2.forEach(ele => {
+        const obj = {}
+        this.column2.forEach(item => {
+          obj[item.label] = ele[item.prop]
+        })
+        Object.keys(obj).forEach((item) => {
+          objKey.push(item)
+        })
+        tableData.push(obj)
+      })
+
+      // 将所有的key值放到数组中
+      objKey = [...new Set(objKey)]
+
+      // 根据左侧值遍历数组
+      for (let i = 0; i < objKey.length; i++) {
+        const obj = {}
+        for (let m = 0; m < tableData.length; m++) {
+          obj[m] = tableData[m][objKey[i]]
+        }
+        targetArr.push(obj)
+      }
+
+      // 新增一个00作为左侧第一列的prop
+      targetArr.forEach((ele, index) => {
+        ele['00'] = objKey[index]
+      })
+
+      this.targetArr2 = targetArr
+      this.clumnArr2 = clumnArr
     }
   }
 
