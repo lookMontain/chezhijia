@@ -2,7 +2,7 @@
   <div class="content">
     <el-table ref="singleTable" :height="getHeight()" :data="targetArr" :show-header="true" :span-method="arraySpanMethod"
       border style="width: 100%" :cell-style="rowStyle" :header-cell-style="headerCellStyle">
-      <el-table-column prop="00" align="center" width="180" fixed>
+      <el-table-column prop="00" align="center" width="180">
         <template slot="header" slot-scope="scope">
           <div>车型</div>
         </template>
