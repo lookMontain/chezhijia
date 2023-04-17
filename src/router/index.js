@@ -53,6 +53,16 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'shouye' }
     },{
+      path: 'modelComparison',
+      name: 'ModelComparison',
+      component: () => import('@/views/pages/modelComparison/index'),
+      meta: { title: '车型对比', icon: 'shouye' }
+    },{
+      path: 'userRequireSpecificResult',
+      name: 'UserRequireSpecificResult',
+      component: () => import('@/views/pages/userRequireSpecificResult/index'),
+      meta: { title: '用户需求专项结论', icon: 'shouye' }
+    },{
       path: 'dataOverview',
       name: 'dataOverview',
       component: () => import('@/views/pages/DataOverview/index.vue'),
