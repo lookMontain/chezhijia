@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '车库',
+  title: 'CarHome',
 
   /**
    * @type {boolean} true | false

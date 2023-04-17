@@ -1,10 +1,9 @@
 <template>
     <div style="padding: 20px;">
-      <div class="content-box"></div>
-      <div class="content-box7"></div>
-      <div class="content-box8"></div>
-      <div class="content-box9"></div>
-      
+      <div class="content-box1"></div>
+      <div class="content-box2"></div>
+      <div class="content-box3"></div>
+      <div class="content-box4"></div>
     </div>
   </template>
   
@@ -30,28 +29,28 @@
   </script>
   
   <style>
-  .content-box{
+  .content-box1{
     margin-top: 10px;
     height: 800px;
-    background: url('../../../assets/dash-bg.png') no-repeat;
+    background: url('../../../assets/bg-e1.png') no-repeat;
     background-size: 100%;
   }
-  .content-box7{
+  .content-box2{
   
     height: 800px;
-    background: url('../../../assets/bg-7.png') no-repeat;
+    background: url('../../../assets/bg-e2.png') no-repeat;
     background-size: 100%;
   }
-  .content-box8{
+  .content-box3{
   
   height: 800px;
-  background: url('../../../assets/bg-8.png') no-repeat;
+  background: url('../../../assets/bg-e3.png') no-repeat;
   background-size: 100%;
   }
-  .content-box9{
+  .content-box4{
   
   height: 800px;
-  background: url('../../../assets/bg-9.png') no-repeat;
+  background: url('../../../assets/bg-e4.png') no-repeat;
   background-size: 100%;
   }
   .bg-purple {

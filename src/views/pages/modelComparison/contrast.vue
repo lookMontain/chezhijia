@@ -14,7 +14,8 @@
               </el-tag>
             </template>
             <template v-else>
-              <el-link type="primary" @click="showDetail(scope.row, scope.column.property)">  {{ scope.row[scope.column.property] }}</el-link>
+              <el-link type="primary" @click="showDetail(scope.row, scope.column.property)"> {{
+                scope.row[scope.column.property] }}</el-link>
             </template>
 
           </div>
@@ -161,13 +162,13 @@ export default {
       }
       return actualTop;
     },
-    scorll (id,indext) {
+    scorll (id, indext) {
       var table = this.$refs.singleTable;
       const bodyWrapper = table.bodyWrapper
       const target = document.getElementById('1' + id)
       const top = this.getElementTop(target)
-      const mScrollTop=document.getElementById('menuBox').scrollTop
-      bodyWrapper.scrollTo(0, top - 255-(indext*43)+20+mScrollTop-2);
+      const mScrollTop = document.getElementById('menuBox').scrollTop
+      bodyWrapper.scrollTo(0, top - 192 - (indext * 43) + mScrollTop);
       // var scrollPosition = target.offsetTop - height + target.clientHeight;
       // table.scrollToRow(index);
       // table.scrollToRow(lastRowIndex, scrollPosition);
@@ -181,10 +182,10 @@ export default {
     },
     headerCellStyle () {
       return {
-        height: '100px',
+        height: '60px',
         color: '#FFF',
         fontSize: "18px",
-        backgroundColor: 'rgb(0 0 0)'
+        backgroundColor: 'rgb(140 140 140)'
       }
     },
     handleGroupRow (index) {
@@ -200,12 +201,12 @@ export default {
       if (this.handleGroupRow(row.rowIndex)) {
         return {
           'text-align': 'left',
-          background: '#efefef',
-          padding:'5px 0'
+          background: '#f8f8f8',
+          padding: '5px 0'
         }
-      }else{
+      } else {
         return {
-          padding:'5px 0'
+          padding: '5px 0'
         }
       }
     },
@@ -258,7 +259,7 @@ export default {
 
       this.targetArr = targetArr
       this.clumnArr = clumnArr
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.$refs.singleTable.doLayout()
       })
     },

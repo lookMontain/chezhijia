@@ -5,7 +5,7 @@
         <div class="grid-content bg-purple" @click="userRequierSelect">用户需求洞察</div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content bg-purple">
+        <div class="grid-content bg-purple" @click="showMessage">
           上市车型与专家评估
         </div>
       </el-col>
@@ -19,10 +19,10 @@
     <div class="content-box7"></div>
     <div class="content-box8"></div>
     <div class="content-box9"></div>
-    <el-dialog title="选择" :visible.sync="dialogVisible" width="500px" :before-close="handleClose">
+    <el-dialog title="选择" :visible.sync="dialogVisible" width="500px">
       <el-row style="display: flex;justify-content: space-around;">
-        <el-button type="warning">用户需求专项结论展示</el-button>
-        <el-button type="danger">消费者关注度研究</el-button>
+        <el-button type="warning" @click="goUserRequireSpecificResult">用户需求专项结论展示</el-button>
+        <el-button type="danger" @click="showMessage">消费者关注度研究</el-button>
       </el-row>
     </el-dialog>
   </div>
@@ -44,8 +44,14 @@ export default {
       this.dialogVisible = true
 
     },
+    goUserRequireSpecificResult () {
+      this.$router.push('UserRequireSpecificResult')
+    },
     goModelComparison () {
       this.$router.push('ModelComparison')
+    },
+    showMessage(){
+      this.$message.info('此模块正在火速研发中，敬请期待！')
     }
   },
   mounted () {

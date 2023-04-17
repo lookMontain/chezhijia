@@ -813,7 +813,7 @@ export default {
 
 .menu-box {
   width: 140px;
-  padding-top: 100px;
+  padding-top: 60px;
   overflow-y: scroll;
 }
 
