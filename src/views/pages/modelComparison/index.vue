@@ -328,8 +328,8 @@ const contrast = Object.freeze([
     '体验悬架调节':8.04
   },
   {
-    name: '问卷M7', //require('../assets/4.jpg'),
-    label: '问卷M7',
+    name: '问界M7', //require('../assets/4.jpg'),
+    label: '问界M7',
     '氛围灯': '',
     BoomBox: '',
     '体验方向盘自定义按钮': '8.14',
