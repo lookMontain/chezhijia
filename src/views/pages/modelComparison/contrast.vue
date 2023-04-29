@@ -26,10 +26,7 @@
           <div>{{ handleTitle(scope.column.property) }}</div>
         </template>
         <template slot-scope="scope">
-          <div v-if="scope.row['00'] === '图片'">
-            <img :src="scope.row[scope.column.property]" alt="">
-          </div>
-          <span v-else>{{ scope.row[scope.column.property] }}</span>
+          <span>{{ handleValue(scope.row, scope.column.property) }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +42,7 @@
             <div>{{ handleTitle(scope.column.property) }}</div>
           </template>
           <template slot-scope="scope">
-            <span>{{ scope.row[scope.column.property] }}</span>
+            <span>{{ handleValueDialog(scope.row[scope.column.property])  }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -57,6 +54,7 @@
 </template>
   
 <script>
+import { cloneDeep } from 'lodash'
 export default {
   name: 'Contrast',
   props: ['contrast', 'column'],
@@ -67,26 +65,26 @@ export default {
       dialogVisible: false,
       column2: [{
         label: '功能丰富',
-        prop: '功能丰富',
+        prop: '功能丰富性',
       },
       {
         label: '逻辑合理',
-        prop: '逻辑合理'
+        prop: '功能逻辑'
       },
       {
         label: '交互便捷',
-        prop: '交互便捷',
+        prop: '使用便捷性',
       },
       {
         label: '视觉美观',
-        prop: '视觉美观'
+        prop: '视觉效果'
       },
       {
         label: '功能可靠',
-        prop: '功能可靠'
+        prop: '功能稳定性'
       }, {
         label: '使用安全',
-        prop: '使用安全'
+        prop: '安全性'
       }],
       contrast2: [
         {
@@ -120,6 +118,18 @@ export default {
     this.getChangeData()
   },
   methods: {
+    handleValueDialog(value){
+      if (value) {
+        return Number(value).toFixed(2)
+      }
+    },
+    handleValue (row, property) {
+      const value = row[property] && row[property]['整体评分']
+      if (value) {
+        return Number(value).toFixed(2)
+      }
+
+    },
     randomNumBoth (Min = 10, Max = 500) {
       var Range = Max - Min;
       var Rand = Math.random();
@@ -132,15 +142,12 @@ export default {
     showDetail (row, perty) {
       console.log(row, perty)
       this.dialogTitle = row[perty]
-      const list = this.contrast.map(item => {
+      debugger
+      const list = cloneDeep(this.contrast).map(item => {
+        const _dialogTitleValue = item[this.dialogTitle] || {}
         return {
-          ...item,
-          '功能丰富': this.randomNumBoth(1, 9),
-          '逻辑合理': this.randomNumBoth(1, 9),
-          '交互便捷': this.randomNumBoth(1, 9),
-          '视觉美观': this.randomNumBoth(1, 9),
-          '功能可靠': this.randomNumBoth(1, 9),
-          '使用安全': this.randomNumBoth(1, 9),
+          'name': item.name,
+          ..._dialogTitleValue
 
         }
       })
@@ -217,7 +224,7 @@ export default {
     },
     handleTitle (p) {
       const t = this.contrast[p]
-      return t.label
+      return t.name
     },
     getChangeData () {
       const clumnArr = [...new Array(this.contrast.length).keys()] // 改变数据，根据数据的长度生成数组，作为table的column的prop

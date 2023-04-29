@@ -35,10 +35,10 @@
 </template>
 
 <script>
-const contrast = Object.freeze([
+import allData from '../mock/all.json'
+const contrast1 = Object.freeze([
   {
     "name": "星越L",
-    img: 1,//require('../assets/1.jpg'),
     label: '星越L',
     '氛围灯': '',
     BoomBox: '',
@@ -421,6 +421,7 @@ const contrast = Object.freeze([
     '体验悬架调节':8.26
   }
 ])
+const contrast= Object.freeze(allData)
 
 const column = Object.freeze([
   // {
