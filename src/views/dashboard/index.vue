@@ -209,6 +209,7 @@ export default {
 }
 
 .row2-left {
+  border-radius: 5px;
   width: 350px;
   height: 190px;
   margin: 100px 0 0 50px;
