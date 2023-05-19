@@ -160,7 +160,7 @@
           <div style="width: 100%;display: flex;justify-content: flex-end;">
           <el-divider class="r-c-divider"></el-divider>
         </div>
-          <div>
+          <div class="row6-right-text-bottom">
             <div>聚焦未来趋势研判</div>
             <div>量化需求与感知价值</div>
             <div>给出智能交互宽度和组合建议</div>
@@ -452,6 +452,7 @@ export default {
 
 .row3-right-text-bottom>div {
   margin: 5px 0;
+  font-size: 16px;
 }
 
 .row4-content-box {
@@ -504,6 +505,7 @@ export default {
 }
 .row5-right-text-bottom > div{
   margin: 5px 0;
+  font-size: 16px;
 }
 .page-box >>> .r-c-divider{
   width: 40px;
@@ -537,6 +539,11 @@ export default {
 .row6-right >>>.el-divider {
   width: 40px !important;
   margin: 20px 0 !important;
+  height: 2px !important;
   background-color: #FFF !important;
+}
+.row6-right-text-bottom > div{
+  margin: 5px 0;
+  font-size: 16px;
 }
 </style>
