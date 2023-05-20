@@ -1,22 +1,47 @@
 <template>
   <div style="padding: 20px;">
-    <div style="display: flex;">
+    <div style="display: flex; flex-direction: column;">
+      <div class="tip-box">
+        <div> <i style="color:#fdab00" class="el-icon-message-solid"></i> 温馨提示：请添加筛选条件查询相关内容</div>
+        <div><i style="color:#000" class="el-icon-close"></i></div>
+      </div>
       <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="选择车型">
-          <el-select v-model="formInline.carType" placeholder="车型" multiple @change="changeType" collapse-tags>
-            <el-option v-for="(item) in contrast" :key="item.name" :label="item.name" :value="item.name"></el-option>
+        <el-form-item label="价位">
+          <el-select clearable v-model="formInline.price" placeholder="请选择" collapse-tags>
+            <el-option v-for="(item) in priceOptions" :key="item.value" :label="item.label"
+              :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item>
+        <el-form-item label="细分市场">
+          <el-select clearable v-model="formInline.market" placeholder="请选择" collapse-tags>
+            <el-option v-for="(item) in marketOptions" :key="item.value" :label="item.label"
+              :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item clearable label="品牌">
+          <el-select v-model="formInline.brand" placeholder="请选择" collapse-tags>
+            <el-option v-for="(item) in brandOptions" :key="item.value" :label="item.label"
+              :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
           <el-button type="primary" @click="onSubmit">查询</el-button>
-        </el-form-item> -->
+          <el-button @click="resetForm()">重置</el-button>
+        </el-form-item>
       </el-form>
-      <!-- <div>
-        <el-tag style="margin-right:10px ;" v-for="(item) in tags" :key="item.key" @click="scorll(item.name)">{{ item.name }}</el-tag>
-      </div> -->
+      <div></div>
+      <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="车型">
+          <el-select v-model="formInline.carType" placeholder="请选择" multiple @change="changeType" collapse-tags>
+            <el-option v-for="(item) in contrastOption" :key="item.name" :label="item.name"
+              :value="item.name"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
     </div>
-    <div class="yes-sir" :style="{
-      height:getHeight()+'px'
+    <div v-if='formInline.carType.length' class="yes-sir" :style="{
+      height: getHeight() + 'px'
     }">
       <div class="menu-box" id="menuBox">
         <div v-for="(item, index) in tags" @click="scorll(item.label, index)" :class="{
@@ -29,6 +54,11 @@
         </div>
       </div>
       <contrastCom class="contrastCom" ref='contrastCom' :contrast="showContrast" :column="column" />
+    </div>
+    <div class="empty" v-else :style="{
+      height: getHeight() + 'px'
+    }">
+<el-empty description="暂无相关车型"></el-empty>
     </div>
 
   </div>
@@ -48,37 +78,37 @@ const contrast1 = Object.freeze([
     '低速模拟声音': '',
     '相机': '7.33',
     '360全景影像监测': '7.11',
-    '我的汽车':'7.57',
-    '调节遮阳帘/天幕':'7.34',
-    '座椅调节':'7.72',
-    '控制车灯':"7.60",
-    '调节方向盘':'7.47',
-    '空调调节':'7.31',
-    '音频控制':'7.29',
-    '微信':'7.30',
-    '显示设置':'7.26',
-    '语音设置':'7.44',
-    '导航':'7.38',
-    '卡拉OK':'7.10',
-    '播放音乐':'7.47',
-    '在线广播':'7.16',
-    '播放网络视频':'7.11',
-    '智能召唤':"7.63",
-    '蓝牙手机配对':'7.01',
-    '远程启动空调':7.66,
-    '车载热点':7.60,
-    'Wi-Fi网络连接':7.54,
-    '用户/个人中心':7.36,
-    '同程订酒店':6.84,
-    '日历/日程':6.77,
-    '天气和空气质量':6.83,
-    '应用商店':7.53,
-    '拨打电话':7.08,
-    '驾驶辅助开关':6.91,
-    'HUD抬头显示设置':7.39,
-    '行驶信息':6.97,
-    '预警提醒':6.77,
-    '驾驶模式切换':6.75
+    '我的汽车': '7.57',
+    '调节遮阳帘/天幕': '7.34',
+    '座椅调节': '7.72',
+    '控制车灯': "7.60",
+    '调节方向盘': '7.47',
+    '空调调节': '7.31',
+    '音频控制': '7.29',
+    '微信': '7.30',
+    '显示设置': '7.26',
+    '语音设置': '7.44',
+    '导航': '7.38',
+    '卡拉OK': '7.10',
+    '播放音乐': '7.47',
+    '在线广播': '7.16',
+    '播放网络视频': '7.11',
+    '智能召唤': "7.63",
+    '蓝牙手机配对': '7.01',
+    '远程启动空调': 7.66,
+    '车载热点': 7.60,
+    'Wi-Fi网络连接': 7.54,
+    '用户/个人中心': 7.36,
+    '同程订酒店': 6.84,
+    '日历/日程': 6.77,
+    '天气和空气质量': 6.83,
+    '应用商店': 7.53,
+    '拨打电话': 7.08,
+    '驾驶辅助开关': 6.91,
+    'HUD抬头显示设置': 7.39,
+    '行驶信息': 6.97,
+    '预警提醒': 6.77,
+    '驾驶模式切换': 6.75
   },
   {
     "name": "岚图Free",
@@ -96,38 +126,38 @@ const contrast1 = Object.freeze([
     '疲劳监测': '7.40',
     '呵护模式': '7.54',
     '照我回家': '7.46',
-    '账单':'7.42',
-    '手机APP支付':'7.46',
-    '调节遮阳帘/天幕':'7.62',
-    '座椅调节':'7.61',
-    '控制车灯':"7.49",
-    '调节后视镜':'7.44',
-    '香氛开关':'7.51',
-    '门窗锁定':'7.43',
-    '空调调节':'7.51',
-    '音频控制':'7.42',
-    '显示设置':'7.33',
-    '语音设置':'7.37',
-    '寻找附近停车位':'7.30',
-    '导航':'7.51',
-    '卡拉OK':'7.31',
-    '播放音乐':'7.49',
-    '在线广播':'7.27',
-    '播放网络视频':'7.42',
-    '蓝牙手机配对':'7.37',
-    '远程启动空调':7.57,
-    '车载热点':7.39,
-    'Wi-Fi网络连接':7.39,
-    '用户/个人中心':7.33,
-    '剩余流量（账户类）':7.35,
-    '同程订酒店':7.41,
-    '日历/日程':7.08,
-    '软件更新':7.45,
-    '拨打电话':7.34,
-    '驾驶辅助开关':7.43,
-    '行驶信息':7.56,
-    '预警提醒':7.46,
-    '驾驶模式切换':7.46
+    '账单': '7.42',
+    '手机APP支付': '7.46',
+    '调节遮阳帘/天幕': '7.62',
+    '座椅调节': '7.61',
+    '控制车灯': "7.49",
+    '调节后视镜': '7.44',
+    '香氛开关': '7.51',
+    '门窗锁定': '7.43',
+    '空调调节': '7.51',
+    '音频控制': '7.42',
+    '显示设置': '7.33',
+    '语音设置': '7.37',
+    '寻找附近停车位': '7.30',
+    '导航': '7.51',
+    '卡拉OK': '7.31',
+    '播放音乐': '7.49',
+    '在线广播': '7.27',
+    '播放网络视频': '7.42',
+    '蓝牙手机配对': '7.37',
+    '远程启动空调': 7.57,
+    '车载热点': 7.39,
+    'Wi-Fi网络连接': 7.39,
+    '用户/个人中心': 7.33,
+    '剩余流量（账户类）': 7.35,
+    '同程订酒店': 7.41,
+    '日历/日程': 7.08,
+    '软件更新': 7.45,
+    '拨打电话': 7.34,
+    '驾驶辅助开关': 7.43,
+    '行驶信息': 7.56,
+    '预警提醒': 7.46,
+    '驾驶模式切换': 7.46
   },
   {
     name: '小鹏P5',
@@ -147,40 +177,40 @@ const contrast1 = Object.freeze([
     '道路救援': '7.64',
     '哨兵模式': '7.84',
     '照我回家': '7.86',
-    '账单':'7.71',
-    '手机APP支付':'7.68',
-    '游戏厅':'7.57',
-    '调节遮阳帘/天幕':'7.82',
-    '车外解锁上锁反馈':'7.80',
-    '座椅调节':'7.80',
-    '控制车灯':"7.71",
-    '调节方向盘':'7.71',
-    '调节后视镜':'7.73',
-    '香氛开关':'7.81',
-    '门窗锁定':'7.75',
-    '后备箱12V电源':'7.80',
-    '空调调节':'7.85',
-    '音频控制':'7.87',
-    '显示设置':'7.77',
-    '语音设置':'7.69',
-    '导航':'7.93',
-    '卡拉OK':'7.69',
-    '播放音乐':'7.90',
-    '在线广播':'7.81',
-    '播放网络视频':'7.85',
-    '蓝牙手机配对':'7.88',
-    '远程启动空调':7.83,
-    'Wi-Fi网络连接':7.73,
-    '用户/个人中心':7.56,
-    '剩余流量（账户类）':7.61,
-    '云服务':7.57,
-    '软件更新':7.82,
-    '应用商店':7.79,
-    '拨打电话':7.87,
-    '驾驶辅助开关':7.82,
-    '行驶信息':7.85,
-    '预警提醒':7.84,
-    '驾驶模式切换':7.88
+    '账单': '7.71',
+    '手机APP支付': '7.68',
+    '游戏厅': '7.57',
+    '调节遮阳帘/天幕': '7.82',
+    '车外解锁上锁反馈': '7.80',
+    '座椅调节': '7.80',
+    '控制车灯': "7.71",
+    '调节方向盘': '7.71',
+    '调节后视镜': '7.73',
+    '香氛开关': '7.81',
+    '门窗锁定': '7.75',
+    '后备箱12V电源': '7.80',
+    '空调调节': '7.85',
+    '音频控制': '7.87',
+    '显示设置': '7.77',
+    '语音设置': '7.69',
+    '导航': '7.93',
+    '卡拉OK': '7.69',
+    '播放音乐': '7.90',
+    '在线广播': '7.81',
+    '播放网络视频': '7.85',
+    '蓝牙手机配对': '7.88',
+    '远程启动空调': 7.83,
+    'Wi-Fi网络连接': 7.73,
+    '用户/个人中心': 7.56,
+    '剩余流量（账户类）': 7.61,
+    '云服务': 7.57,
+    '软件更新': 7.82,
+    '应用商店': 7.79,
+    '拨打电话': 7.87,
+    '驾驶辅助开关': 7.82,
+    '行驶信息': 7.85,
+    '预警提醒': 7.84,
+    '驾驶模式切换': 7.88
   },
   {
     name: 'ModelY', //require('../assets/4.jpg'),
@@ -205,35 +235,35 @@ const contrast1 = Object.freeze([
     '哨兵模式': '7.75',
     '爱犬模式': '7.64',
     '露营模式': '7.67',
-    '手机APP支付':'7.69',
-    '游戏厅':'7.78',
-    '画板':'7.60',
-    '开启手套箱':'7.47',
-    '控制车灯':"7.60",
-    '调节方向盘':'7.73',
-    '调节后视镜':'7.63',
-    '门窗锁定':'7.62',
-    '空调调节':'7.53',
-    '音频控制':'7.51',
-    '显示设置':'7.42',
-    '导航':'7.47',
-    '卡拉OK':'7.16',
-    '播放音乐':'7.53',
-    '在线广播':'7.24',
-    '播放网络视频':'7.27',
-    '智能召唤:':'7.66',
-    '蓝牙手机配对':7.46,
-    '远程启动空调':7.73,
-    'Wi-Fi网络连接':7.59,
-    '用户/个人中心':7.58,
-    '日历/日程':7.25,
-    '天气和空气质量':7.41,
-    '软件更新':7.67,
-    '拨打电话':7.13,
-    '驾驶辅助开关':7.34,
-    '行驶信息':7.39,
-    '预警提醒':7.34,
-    '驾驶模式切换':7.33
+    '手机APP支付': '7.69',
+    '游戏厅': '7.78',
+    '画板': '7.60',
+    '开启手套箱': '7.47',
+    '控制车灯': "7.60",
+    '调节方向盘': '7.73',
+    '调节后视镜': '7.63',
+    '门窗锁定': '7.62',
+    '空调调节': '7.53',
+    '音频控制': '7.51',
+    '显示设置': '7.42',
+    '导航': '7.47',
+    '卡拉OK': '7.16',
+    '播放音乐': '7.53',
+    '在线广播': '7.24',
+    '播放网络视频': '7.27',
+    '智能召唤:': '7.66',
+    '蓝牙手机配对': 7.46,
+    '远程启动空调': 7.73,
+    'Wi-Fi网络连接': 7.59,
+    '用户/个人中心': 7.58,
+    '日历/日程': 7.25,
+    '天气和空气质量': 7.41,
+    '软件更新': 7.67,
+    '拨打电话': 7.13,
+    '驾驶辅助开关': 7.34,
+    '行驶信息': 7.39,
+    '预警提醒': 7.34,
+    '驾驶模式切换': 7.33
   },
   {
     name: '小鹏G9', //require('../assets/4.jpg'),
@@ -255,31 +285,31 @@ const contrast1 = Object.freeze([
     '能量应用程序': '8.28',
     '道路救援': '8.18',
     '哨兵模式': '8.22',
-    '游戏厅':'7.95',
-    '香氛开关':'7.26',
-    '门窗锁定':'8.41',
-    '体验后备箱调节':'8.31',
-    '微信':'8.00',
-    '显示设置':'8.23',
-    '语音设置':'8.20',
-    '导航':'8.27',
-    '卡拉OK':'8.14',
-    '播放音乐':'8.34',
-    '在线广播':'8.17',
-    '播放网络视频':'8.33',
-    '智慧生活功能的操作':'8.36',
-    '蓝牙手机配对':8.16,
-    '寻车功能':8.31,
-    '远程启动空调':8.32,
-    'AR眼镜功能':8.40,
-    '用户/个人中心':8.17,
-    '日历/日程':7.89,
-    '天气和空气质量':7.97,
-    '应用商店':8.17,
-    '拨打电话':8.14,
-    '行驶信息':8.16,
-    '驾驶模式切换':8.21,
-    '体验悬架调节':8.12
+    '游戏厅': '7.95',
+    '香氛开关': '7.26',
+    '门窗锁定': '8.41',
+    '体验后备箱调节': '8.31',
+    '微信': '8.00',
+    '显示设置': '8.23',
+    '语音设置': '8.20',
+    '导航': '8.27',
+    '卡拉OK': '8.14',
+    '播放音乐': '8.34',
+    '在线广播': '8.17',
+    '播放网络视频': '8.33',
+    '智慧生活功能的操作': '8.36',
+    '蓝牙手机配对': 8.16,
+    '寻车功能': 8.31,
+    '远程启动空调': 8.32,
+    'AR眼镜功能': 8.40,
+    '用户/个人中心': 8.17,
+    '日历/日程': 7.89,
+    '天气和空气质量': 7.97,
+    '应用商店': 8.17,
+    '拨打电话': 8.14,
+    '行驶信息': 8.16,
+    '驾驶模式切换': 8.21,
+    '体验悬架调节': 8.12
   },
   {
     name: '唐EV', //require('../assets/4.jpg'),
@@ -301,31 +331,31 @@ const contrast1 = Object.freeze([
     '能量应用程序': '7.87',
     '道路救援': '8.00',
     '哨兵模式': '8.16',
-    '游戏厅':'7.72',
-    '香氛开关':'8.07',
-    '门窗锁定':'7.76',
-    '体验后备箱调节':'7.76',
-    '微信':'8.01',
-    '显示设置':'7.71',
-    '语音设置':'7.81',
-    '导航':'7.99',
-    '卡拉OK':'7.87',
-    '播放音乐':'7.99',
-    '在线广播':'7.88',
-    '播放网络视频':'8.06',
-    '智慧生活功能的操作':'8.22',
-    '蓝牙手机配对':8.03,
-    '寻车功能':8.01,
-    '远程启动空调':8.03,
-    'AR眼镜功能':8.17,
-    '用户/个人中心':7.75,
-    '日历/日程':7.69,
-    '天气和空气质量':8.01,
-    '应用商店':7.99,
-    '拨打电话':8.00,
-    '行驶信息':7.84,
-    '驾驶模式切换':8.04,
-    '体验悬架调节':8.04
+    '游戏厅': '7.72',
+    '香氛开关': '8.07',
+    '门窗锁定': '7.76',
+    '体验后备箱调节': '7.76',
+    '微信': '8.01',
+    '显示设置': '7.71',
+    '语音设置': '7.81',
+    '导航': '7.99',
+    '卡拉OK': '7.87',
+    '播放音乐': '7.99',
+    '在线广播': '7.88',
+    '播放网络视频': '8.06',
+    '智慧生活功能的操作': '8.22',
+    '蓝牙手机配对': 8.03,
+    '寻车功能': 8.01,
+    '远程启动空调': 8.03,
+    'AR眼镜功能': 8.17,
+    '用户/个人中心': 7.75,
+    '日历/日程': 7.69,
+    '天气和空气质量': 8.01,
+    '应用商店': 7.99,
+    '拨打电话': 8.00,
+    '行驶信息': 7.84,
+    '驾驶模式切换': 8.04,
+    '体验悬架调节': 8.04
   },
   {
     name: '问界M7', //require('../assets/4.jpg'),
@@ -347,31 +377,31 @@ const contrast1 = Object.freeze([
     '能量应用程序': '8.12',
     '道路救援': '8.10',
     '哨兵模式': '8.17',
-    '游戏厅':'7.93',
-    '香氛开关':'7.99',
-    '门窗锁定':'8.02',
-    '体验后备箱调节':'8.05',
-    '微信':'8.18',
-    '显示设置':'8.25',
-    '语音设置':'8.17',
-    '导航':'8.22',
-    '卡拉OK':'7.81',
-    '播放音乐':'8.11',
-    '在线广播':'8.15',
-    '播放网络视频':'8.06',
-    '智慧生活功能的操作':'8.23',
-    '蓝牙手机配对':8.26,
-    '寻车功能':8.25,
-    '远程启动空调':8.28,
-    'AR眼镜功能':8.17,
-    '用户/个人中心':7.97,
-    '日历/日程':8.23,
-    '天气和空气质量':8.25,
-    '应用商店':8.19,
-    '拨打电话':8.21,
-    '行驶信息':8.13,
-    '驾驶模式切换':8.22,
-    '体验悬架调节':8.25
+    '游戏厅': '7.93',
+    '香氛开关': '7.99',
+    '门窗锁定': '8.02',
+    '体验后备箱调节': '8.05',
+    '微信': '8.18',
+    '显示设置': '8.25',
+    '语音设置': '8.17',
+    '导航': '8.22',
+    '卡拉OK': '7.81',
+    '播放音乐': '8.11',
+    '在线广播': '8.15',
+    '播放网络视频': '8.06',
+    '智慧生活功能的操作': '8.23',
+    '蓝牙手机配对': 8.26,
+    '寻车功能': 8.25,
+    '远程启动空调': 8.28,
+    'AR眼镜功能': 8.17,
+    '用户/个人中心': 7.97,
+    '日历/日程': 8.23,
+    '天气和空气质量': 8.25,
+    '应用商店': 8.19,
+    '拨打电话': 8.21,
+    '行驶信息': 8.13,
+    '驾驶模式切换': 8.22,
+    '体验悬架调节': 8.25
   },
   {
     name: '理想L9', //require('../assets/4.jpg'),
@@ -393,35 +423,35 @@ const contrast1 = Object.freeze([
     '能量应用程序': '8.25',
     '道路救援': '8.20',
     '哨兵模式': '8.47',
-    '我的汽车':'',
-    '游戏厅':'8.22',
-    '香氛开关':'8.16',
-    '门窗锁定':'8.30',
-    '体验后备箱调节':'8.34',
-    '微信':'8.24',
-    '显示设置':'8.27',
-    '语音设置':'8.30',
-    '导航':'8.41',
-    '卡拉OK':'8.29',
-    '播放音乐':'8.47',
-    '在线广播':'8.12',
-    '播放网络视频':'8.43',
-    '智慧生活功能的操作':'8.39',
-    '蓝牙手机配对':8.23,
-    '寻车功能':8.32,
-    '远程启动空调':8.30,
-    'AR眼镜功能':8.20,
-    '用户/个人中心':8.17,
-    '日历/日程':8.04,
-    '天气和空气质量':8.36,
-    '应用商店':8.17,
-    '拨打电话':8.36,
-    '行驶信息':8.14,
-    '驾驶模式切换':8.29,
-    '体验悬架调节':8.26
+    '我的汽车': '',
+    '游戏厅': '8.22',
+    '香氛开关': '8.16',
+    '门窗锁定': '8.30',
+    '体验后备箱调节': '8.34',
+    '微信': '8.24',
+    '显示设置': '8.27',
+    '语音设置': '8.30',
+    '导航': '8.41',
+    '卡拉OK': '8.29',
+    '播放音乐': '8.47',
+    '在线广播': '8.12',
+    '播放网络视频': '8.43',
+    '智慧生活功能的操作': '8.39',
+    '蓝牙手机配对': 8.23,
+    '寻车功能': 8.32,
+    '远程启动空调': 8.30,
+    'AR眼镜功能': 8.20,
+    '用户/个人中心': 8.17,
+    '日历/日程': 8.04,
+    '天气和空气质量': 8.36,
+    '应用商店': 8.17,
+    '拨打电话': 8.36,
+    '行驶信息': 8.14,
+    '驾驶模式切换': 8.29,
+    '体验悬架调节': 8.26
   }
 ])
-const contrast= Object.freeze(allData)
+const contrast = Object.freeze(allData)
 
 const column = Object.freeze([
   // {
@@ -823,21 +853,112 @@ export default {
 
       showContrast: [],
       tags: [],
-      activeIndex: 0
+      activeIndex: 0,
+      priceOptions: [{
+        value: "10-25",
+        label: '10万-25万'
+      }, {
+        value: "25-30",
+        label: '25万-30万'
+      }, {
+        value: "30-35",
+        label: '30万-35万'
+      }, {
+        value: "35-40",
+        label: '35万-40万'
+      }, {
+        value: "40-100",
+        label: '40万-100万'
+      }],
+      marketOptions: [{
+        value: "小型轿车",
+        label: "小型轿车"
+      }, {
+        value: "中型轿车",
+        label: "中型轿车"
+      }, {
+        value: "中型SVU",
+        label: "中型SVU"
+      }],
+      brandOptions: [{
+        value: "理想",
+        label: "理想"
+      }, {
+        value: "华为",
+        label: "华为"
+      }, {
+        value: "比亚迪",
+        label: "比亚迪"
+      }, {
+        value: "小鹏",
+        label: "小鹏"
+      }, {
+        value: "特斯拉",
+        label: "特斯拉"
+      }, {
+        value: "东风",
+        label: "东风"
+      }, {
+        value: "吉利",
+        label: "吉利"
+      }],
+      contrastOption: []
     }
   },
   methods: {
+    resetForm () {
+      this.formInline.price = ''
+      this.formInline.market = ''
+      this.formInline.brand = ''
+      this.formInline.carType = []
+      this.contrastOption = []
+      this.showContrast = []
+      // 重新获取车型
+    },
+    // 根据条件查车型
+    onSubmit () {
+      const { price, market, brand } = this.formInline
+      const list = this.contrast.filter(item => {
+        let isOk = true
+        if (price !== undefined) {
+          const range = price.split('-')
+          const price_ = item.price
+          if (price_ < range[0] || price_ > range[1]) {
+            isOk = false
+          }
+        }
+        if (market !== undefined) {
+          const market_ = item.market
+          if (market!==market_) {
+            isOk = false
+          }
+        }
+        if (brand !== undefined) {
+          const brand_ = item.brand
+          if (brand!==brand_) {
+            isOk = false
+          }
+        }
+        return isOk
+      })
+
+      this.contrastOption = list
+      // 把list中的name筛选出来， 如果carType 中存在则保留，不存在把carType中的剔除
+      const nameList=list.map(item=>item.name)
+      this.formInline.carType = this.formInline.carType.filter(item=>nameList.includes(item))
+      this.showContrast =  this.showContrast.filter(item=>nameList.includes(item.name))
+    },
     getHeight () {
       const innerHeight = window.innerHeight
-      return innerHeight - 150
+      return innerHeight - 230
     },
     initTags () {
 
       this.tags = this.column.filter(item => item.isGroup)
     },
     initShowContrast () {
-      this.formInline.carType = this.contrast.slice(0, 6).map(item => item.name)
-      this.showContrast = this.contrast.slice(0, 6)
+      // this.formInline.carType = this.contrast.slice(0, 6).map(item => item.name)
+      // this.showContrast = this.contrast.slice(0, 6)
     },
     scorll (id, index) {
       this.activeIndex = index
@@ -1025,14 +1146,14 @@ export default {
 
 .menu-box {
   width: 140px;
-  padding-top: 60px;
+  /* padding-top: 60px; */
   overflow-y: scroll;
 }
 
 .menu-box>div {
-  height: 43px;
+  height: 48px;
   display: flex;
-  background: #d6d6d6;
+  /* background: #d6d6d6; */
   align-items: center;
   margin-bottom: 1px;
   justify-content: space-around;
@@ -1052,5 +1173,51 @@ export default {
   color: #fff;
   background-color: #67c23a !important;
   border-color: #67c23a;
+}
+
+.tip-box {
+  background: #e9f8ff;
+  display: flex;
+  justify-content: space-between;
+  height: 36px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid #67b0ee;
+  margin: 0 20px 10px 20px;
+  color: #3da6e4;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/*定义滚动条高宽及背景
+ 高宽分别对应横竖滚动条的尺寸*/
+.menu-box::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+}
+
+/*定义滚动条轨道
+ 内阴影+圆角*/
+.menu-box::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #FFF;
+}
+
+/*定义滑块
+     内阴影+圆角*/
+.menu-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  width: 4px;
+  height: 4px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #c6d5dc;
+}
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

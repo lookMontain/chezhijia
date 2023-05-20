@@ -9,12 +9,12 @@
         <template slot-scope="scope">
           <div :id="getId(scope.row[scope.column.property])">
             <template v-if="handleGroupRow(scope.$index)">
-              <el-tag type="success" style="font-size: 16px;font-weight: 600;">
+              <el-tag effect="plain" type="success" style="font-size: 16px;font-weight: 600;">
                 {{ scope.row[scope.column.property] }}
               </el-tag>
             </template>
             <template v-else>
-              <el-link type="primary" @click="showDetail(scope.row, scope.column.property)"> {{
+              <el-link style="color:#2f6ad6" type="primary" @click="showDetail(scope.row, scope.column.property)"> {{
                 scope.row[scope.column.property] }}</el-link>
             </template>
 
@@ -158,7 +158,7 @@ export default {
     },
     getHeight () {
       const innerHeight = window.innerHeight
-      return innerHeight - 150
+      return innerHeight -230
     },
     getElementTop (element) {
       var actualTop = element.offsetTop;
@@ -175,7 +175,8 @@ export default {
       const target = document.getElementById('1' + id)
       const top = this.getElementTop(target)
       const mScrollTop = document.getElementById('menuBox').scrollTop
-      bodyWrapper.scrollTo(0, top - 192 - (indext * 43) + mScrollTop);
+      const x= indext===0?80:40
+      bodyWrapper.scrollTo(0, top - 192 - (indext * 48) + mScrollTop-x);
       // var scrollPosition = target.offsetTop - height + target.clientHeight;
       // table.scrollToRow(index);
       // table.scrollToRow(lastRowIndex, scrollPosition);
@@ -189,10 +190,10 @@ export default {
     },
     headerCellStyle () {
       return {
-        height: '60px',
+        height: '40px',
         color: '#FFF',
-        fontSize: "18px",
-        backgroundColor: 'rgb(140 140 140)'
+        fontSize: "16px",
+        backgroundColor: '#000'
       }
     },
     handleGroupRow (index) {
@@ -208,7 +209,7 @@ export default {
       if (this.handleGroupRow(row.rowIndex)) {
         return {
           'text-align': 'left',
-          background: '#f8f8f8',
+          background: '#f8fafb',
           padding: '5px 0'
         }
       } else {
