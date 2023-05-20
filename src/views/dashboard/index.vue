@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 20px;" class="page-box">
+  <div style="padding:0;" class="page-box">
     <el-row :gutter="20" style="margin-bottom: 10px;">
       <el-col :span="8">
         <el-tag class="grid-content bg-purple" @click="userRequierSelect">用户需求洞察</el-tag>

@@ -1,67 +1,71 @@
 <template>
-  <div style="padding: 20px;">
-    <div style="display: flex; flex-direction: column;">
-      <div class="tip-box">
-        <div> <i style="color:#fdab00" class="el-icon-message-solid"></i> 温馨提示：请添加筛选条件查询相关内容</div>
-        <div><i style="color:#000" class="el-icon-close"></i></div>
-      </div>
-      <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="价位">
-          <el-select clearable v-model="formInline.price" placeholder="请选择" collapse-tags>
-            <el-option v-for="(item) in priceOptions" :key="item.value" :label="item.label"
-              :value="item.value"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="细分市场">
-          <el-select clearable v-model="formInline.market" placeholder="请选择" collapse-tags>
-            <el-option v-for="(item) in marketOptions" :key="item.value" :label="item.label"
-              :value="item.value"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item clearable label="品牌">
-          <el-select v-model="formInline.brand" placeholder="请选择" collapse-tags>
-            <el-option v-for="(item) in brandOptions" :key="item.value" :label="item.label"
-              :value="item.value"></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
-          <el-button @click="resetForm()">重置</el-button>
-        </el-form-item>
-      </el-form>
-      <div></div>
-      <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="车型">
-          <el-select v-model="formInline.carType" placeholder="请选择" multiple @change="changeType" collapse-tags>
-            <el-option v-for="(item) in contrastOption" :key="item.name" :label="item.name"
-              :value="item.name"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-    </div>
-    <div v-if='formInline.carType.length' class="yes-sir" :style="{
-      height: getHeight() + 'px'
-    }">
-      <div class="menu-box" id="menuBox">
-        <div v-for="(item, index) in tags" @click="scorll(item.label, index)" :class="{
-          active: index === activeIndex
-        }">
-          <div>
-            {{ item.label }}
+  <el-container style="background: #fff;">
+    <el-main>
+      <div>
+        <div style="display: flex; flex-direction: column;">
+          <div class="tip-box">
+            <div> <i style="color:#fdab00" class="el-icon-message-solid"></i> 温馨提示：请添加筛选条件查询相关内容</div>
+            <div><i style="color:#000" class="el-icon-close"></i></div>
           </div>
-          <i class='el-icon-arrow-right'></i>
-        </div>
-      </div>
-      <contrastCom class="contrastCom" ref='contrastCom' :contrast="showContrast" :column="column" />
-    </div>
-    <div class="empty" v-else :style="{
-      height: getHeight() + 'px'
-    }">
-<el-empty description="暂无相关车型"></el-empty>
-    </div>
+          <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="价位">
+              <el-select clearable v-model="formInline.price" placeholder="请选择" collapse-tags>
+                <el-option v-for="(item) in priceOptions" :key="item.value" :label="item.label"
+                  :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="细分市场">
+              <el-select clearable v-model="formInline.market" placeholder="请选择" collapse-tags>
+                <el-option v-for="(item) in marketOptions" :key="item.value" :label="item.label"
+                  :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item clearable label="品牌">
+              <el-select v-model="formInline.brand" placeholder="请选择" collapse-tags>
+                <el-option v-for="(item) in brandOptions" :key="item.value" :label="item.label"
+                  :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
 
-  </div>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">查询</el-button>
+              <el-button @click="resetForm()">重置</el-button>
+            </el-form-item>
+          </el-form>
+          <div></div>
+          <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="车型">
+              <el-select v-model="formInline.carType" placeholder="请选择" multiple @change="changeType" collapse-tags>
+                <el-option v-for="(item) in contrastOption" :key="item.name" :label="item.name"
+                  :value="item.name"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div v-if='formInline.carType.length' class="yes-sir" :style="{
+          height: getHeight() + 'px'
+        }">
+          <div class="menu-box" id="menuBox">
+            <div v-for="(item, index) in tags" @click="scorll(item.label, index)" :class="{
+              active: index === activeIndex
+            }">
+              <div>
+                {{ item.label }}
+              </div>
+              <i class='el-icon-arrow-right'></i>
+            </div>
+          </div>
+          <contrastCom class="contrastCom" ref='contrastCom' :contrast="showContrast" :column="column" />
+        </div>
+        <div class="empty" v-else :style="{
+          height: getHeight() + 'px'
+        }">
+          <el-empty description="暂无相关车型"></el-empty>
+        </div>
+
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
@@ -929,13 +933,13 @@ export default {
         }
         if (market !== undefined) {
           const market_ = item.market
-          if (market!==market_) {
+          if (market !== market_) {
             isOk = false
           }
         }
         if (brand !== undefined) {
           const brand_ = item.brand
-          if (brand!==brand_) {
+          if (brand !== brand_) {
             isOk = false
           }
         }
@@ -944,9 +948,9 @@ export default {
 
       this.contrastOption = list
       // 把list中的name筛选出来， 如果carType 中存在则保留，不存在把carType中的剔除
-      const nameList=list.map(item=>item.name)
-      this.formInline.carType = this.formInline.carType.filter(item=>nameList.includes(item))
-      this.showContrast =  this.showContrast.filter(item=>nameList.includes(item.name))
+      const nameList = list.map(item => item.name)
+      this.formInline.carType = this.formInline.carType.filter(item => nameList.includes(item))
+      this.showContrast = this.showContrast.filter(item => nameList.includes(item.name))
     },
     getHeight () {
       const innerHeight = window.innerHeight
@@ -1215,7 +1219,8 @@ export default {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
   background-color: #c6d5dc;
 }
-.empty{
+
+.empty {
   display: flex;
   justify-content: center;
   align-items: center;

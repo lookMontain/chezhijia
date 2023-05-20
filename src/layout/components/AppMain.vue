@@ -22,6 +22,8 @@ export default {
   /*50 = navbar  */
   min-height: calc(100vh - 50px);
   width: 100%;
+  padding: 10px;
+  background: #f1f3f4;
   position: relative;
   overflow: hidden;
 }
