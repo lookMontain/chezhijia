@@ -20,8 +20,8 @@
                   :value="item.value"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item clearable label="品牌">
-              <el-select v-model="formInline.brand"  @change="onSubmit" placeholder="请选择" collapse-tags>
+            <el-form-item  label="品牌">
+              <el-select clearable v-model="formInline.brand"  @change="onSubmit" placeholder="请选择" collapse-tags>
                 <el-option v-for="(item) in brandOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
