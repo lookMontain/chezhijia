@@ -9,19 +9,20 @@
           </div>
           <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="价位">
-              <el-select clearable v-model="formInline.price" @change="onSubmit" placeholder="请选择" collapse-tags>
+              <el-select clearable v-model="formInline.price" multiple @change="onSubmit" placeholder="请选择" collapse-tags>
                 <el-option v-for="(item) in priceOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="细分市场">
-              <el-select clearable v-model="formInline.market"  @change="onSubmit" placeholder="请选择" collapse-tags>
+              <el-select clearable v-model="formInline.market" multiple @change="onSubmit" placeholder="请选择"
+                collapse-tags>
                 <el-option v-for="(item) in marketOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item  label="品牌">
-              <el-select clearable v-model="formInline.brand"  @change="onSubmit" placeholder="请选择" collapse-tags>
+            <el-form-item label="品牌">
+              <el-select clearable v-model="formInline.brand" multiple @change="onSubmit" placeholder="请选择" collapse-tags>
                 <el-option v-for="(item) in brandOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
@@ -642,7 +643,8 @@ const column = Object.freeze([
   {
     label: '影音娱乐',
     prop: '影音娱乐',
-    isGroup: true
+    isGroup: true,
+    order: 3,
   }, {
     label: '游戏厅',
     prop: '游戏厅',
@@ -667,7 +669,9 @@ const column = Object.freeze([
   {
     label: '车辆调节',
     prop: '车辆调节',
-    isGroup: true
+    isGroup: true,
+    order: 1,
+
   }, {
     label: '开启手套箱',
     prop: '开启手套箱',
@@ -715,7 +719,8 @@ const column = Object.freeze([
   {
     label: '系统设置',
     prop: '系统设置',
-    isGroup: true
+    isGroup: true,
+    order: 2
   }, {
     label: '显示设置',
     prop: '显示设置',
@@ -741,7 +746,8 @@ const column = Object.freeze([
   {
     label: '行程辅助',
     prop: '行程辅助',
-    isGroup: true
+    isGroup: true,
+    order: 4
   }, {
     label: '寻找附近停车位',
     prop: '寻找附近停车位',
@@ -852,7 +858,10 @@ export default {
       contrast, // 对比数据，与平时使用相同
       column,// 左侧名称和顺序
       formInline: {
-        carType: []
+        carType: [],
+        price: [],
+        market: [],
+        brand: []
       },
 
       showContrast: [],
@@ -871,7 +880,7 @@ export default {
       marketOptions: [{
         value: "紧凑型SUV",
         label: "紧凑型SUV"
-      },{
+      }, {
         value: "中型SUV",
         label: "中型SUV"
       }, {
@@ -908,9 +917,9 @@ export default {
   },
   methods: {
     resetForm () {
-      this.formInline.price = ''
-      this.formInline.market = ''
-      this.formInline.brand = ''
+      this.formInline.price = []
+      this.formInline.market = []
+      this.formInline.brand = []
       this.formInline.carType = []
       this.contrastOption = []
       this.showContrast = []
@@ -921,28 +930,29 @@ export default {
       const { price, market, brand } = this.formInline
       const list = this.contrast.filter(item => {
         let isOk = true
-        if (price) {
-          const range = price.split('-')
-          const price_ = item.price
-          if (price_ < range[0] || price_ > range[1]) {
+        if (price && price.length) {
+          const target = price.find(xitem => {
+            const range = xitem.split('-')
+            if (item.price >= range[0] && item.price <= range[1]) {
+              return item
+            }
+          })
+          if (!target) {
             isOk = false
           }
         }
-        if (market) {
-          const market_ = item.market
-          if (market !== market_) {
+        if (market && market.length) {
+          if (!market.find(x => x === item.market)) {
             isOk = false
           }
         }
-        if (brand) {
-          const brand_ = item.brand
-          if (brand !== brand_) {
+        if (brand && brand.length) {
+          if (!brand.find(x => x === item.brand)) {
             isOk = false
           }
         }
         return isOk
       })
-
       this.contrastOption = list
       // 把list中的name筛选出来， 如果carType 中存在则保留，不存在把carType中的剔除
       const nameList = list.map(item => item.name)
@@ -954,14 +964,27 @@ export default {
       return innerHeight - 230
     },
     initTags () {
+      this.column.forEach(item => {
+        if (!item.order) {
+          item.order = 9000
+        }
+      })
+      this.tags = this.column.filter(item => item.isGroup).sort((val1, val2) => {
+        return val1.order - val2.order
+      });
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.scorll('车辆调节', 0)
+        })
+      })
 
-      this.tags = this.column.filter(item => item.isGroup)
     },
     initShowContrast () {
-      // this.formInline.carType = this.contrast.slice(0, 6).map(item => item.name)
-      // this.showContrast = this.contrast.slice(0, 6)
+      this.formInline.carType = this.contrast.slice(0, 6).map(item => item.name)
+      this.showContrast = this.contrast.slice(0, 6)
     },
     scorll (id, index) {
+
       this.activeIndex = index
       this.$refs.contrastCom.scorll(id, index)
     },
@@ -981,6 +1004,7 @@ export default {
     },
   },
   mounted () {
+    this.contrastOption = this.contrast
     this.initTags()
     this.initShowContrast()
   }
