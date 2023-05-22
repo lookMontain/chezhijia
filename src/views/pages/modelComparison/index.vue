@@ -859,37 +859,34 @@ export default {
       tags: [],
       activeIndex: 0,
       priceOptions: [{
-        value: "10-25",
-        label: '10万-25万'
+        value: "10-20",
+        label: '10万-20万'
       }, {
-        value: "25-30",
-        label: '25万-30万'
+        value: "20-30",
+        label: '20万-30万'
       }, {
-        value: "30-35",
-        label: '30万-35万'
-      }, {
-        value: "35-40",
-        label: '35万-40万'
-      }, {
-        value: "40-100",
-        label: '40万-100万'
+        value: "30-40",
+        label: '30万-40万'
       }],
       marketOptions: [{
-        value: "小型轿车",
-        label: "小型轿车"
+        value: "紧凑型SUV",
+        label: "紧凑型SUV"
+      },{
+        value: "中型SUV",
+        label: "中型SUV"
       }, {
-        value: "中型轿车",
-        label: "中型轿车"
+        value: "中大型SUV",
+        label: "中大型SUV"
       }, {
-        value: "中型SVU",
-        label: "中型SVU"
+        value: "紧凑型轿车",
+        label: "紧凑型轿车"
       }],
       brandOptions: [{
         value: "理想",
         label: "理想"
       }, {
-        value: "华为",
-        label: "华为"
+        value: "问界",
+        label: "问界"
       }, {
         value: "比亚迪",
         label: "比亚迪"
@@ -900,8 +897,8 @@ export default {
         value: "特斯拉",
         label: "特斯拉"
       }, {
-        value: "东风",
-        label: "东风"
+        value: "岚图",
+        label: "岚图"
       }, {
         value: "吉利",
         label: "吉利"
