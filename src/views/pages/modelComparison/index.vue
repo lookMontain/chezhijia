@@ -921,7 +921,7 @@ export default {
       this.formInline.market = []
       this.formInline.brand = []
       this.formInline.carType = []
-      this.contrastOption = []
+      this.contrastOption = this.contrast
       this.showContrast = []
       // 重新获取车型
     },
