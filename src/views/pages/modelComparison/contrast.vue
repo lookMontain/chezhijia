@@ -127,6 +127,8 @@ export default {
       const value = row[property] && row[property]['整体评分']
       if (value) {
         return Number(value).toFixed(2)
+      }else{
+        return '-'
       }
 
     },

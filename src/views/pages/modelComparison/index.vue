@@ -9,19 +9,19 @@
           </div>
           <el-form size="mini" :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="价位">
-              <el-select clearable v-model="formInline.price" placeholder="请选择" collapse-tags>
+              <el-select clearable v-model="formInline.price" @change="onSubmit" placeholder="请选择" collapse-tags>
                 <el-option v-for="(item) in priceOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="细分市场">
-              <el-select clearable v-model="formInline.market" placeholder="请选择" collapse-tags>
+              <el-select clearable v-model="formInline.market"  @change="onSubmit" placeholder="请选择" collapse-tags>
                 <el-option v-for="(item) in marketOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item clearable label="品牌">
-              <el-select v-model="formInline.brand" placeholder="请选择" collapse-tags>
+              <el-select v-model="formInline.brand"  @change="onSubmit" placeholder="请选择" collapse-tags>
                 <el-option v-for="(item) in brandOptions" :key="item.value" :label="item.label"
                   :value="item.value"></el-option>
               </el-select>
@@ -924,20 +924,20 @@ export default {
       const { price, market, brand } = this.formInline
       const list = this.contrast.filter(item => {
         let isOk = true
-        if (price !== undefined) {
+        if (price) {
           const range = price.split('-')
           const price_ = item.price
           if (price_ < range[0] || price_ > range[1]) {
             isOk = false
           }
         }
-        if (market !== undefined) {
+        if (market) {
           const market_ = item.market
           if (market !== market_) {
             isOk = false
           }
         }
-        if (brand !== undefined) {
+        if (brand) {
           const brand_ = item.brand
           if (brand !== brand_) {
             isOk = false
