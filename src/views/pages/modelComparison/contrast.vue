@@ -26,7 +26,8 @@
           <div>{{ handleTitle(scope.column.property) }}</div>
         </template>
         <template slot-scope="scope">
-          <span>{{ handleValue(scope.row, scope.column.property) }}</span>
+          <span @click="showSingleDetail(scope.row, scope.column.property, scope.column)">{{ handleValue(scope.row,
+            scope.column.property) }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -60,6 +61,24 @@
         <el-button type="primary" size="mini" @click="dialogVisible = false">关闭窗口</el-button>
       </span>
     </el-dialog>
+    <el-dialog :title="singleDetailTitle" :visible.sync="singleDetail" width="900">
+      <el-descriptions title="" :column="3" border>
+        <el-descriptions-item label="功能丰富">{{singleDetailData['功能丰富性']}}</el-descriptions-item>
+        <el-descriptions-item label="逻辑合理">{{ singleDetailData['功能逻辑'] }}</el-descriptions-item>
+        <el-descriptions-item label="交互便捷">
+         {{  singleDetailData['使用便捷性']}}
+        </el-descriptions-item>
+        <el-descriptions-item label="视觉美观">
+          {{  singleDetailData['视觉效果']}}
+          </el-descriptions-item>
+        <el-descriptions-item label="功能可靠"> {{  singleDetailData['功能稳定性']}}</el-descriptions-item>
+        <el-descriptions-item label="使用安全">{{  singleDetailData['安全性']}}</el-descriptions-item>
+        <el-descriptions-item label="整体评分"><el-tag size="small">{{singleDetailData['整体评分']}}</el-tag></el-descriptions-item>
+      </el-descriptions>
+      <span slot="footer" class="dialog-footer">
+        <el-button  size='mini' @click="singleDetail = false">关闭</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
   
@@ -74,6 +93,9 @@ export default {
       clumnArr: [],
       dialogVisible: false,
       column2: [{
+        label: '整体评分',
+        prop: '整体评分'
+      }, {
         label: '功能丰富',
         prop: '功能丰富性',
       },
@@ -95,9 +117,6 @@ export default {
       }, {
         label: '使用安全',
         prop: '安全性'
-      }, {
-        label: '整体评分',
-        prop: '整体评分'
       }],
       contrast2: [
         {
@@ -115,7 +134,18 @@ export default {
         }],
       clumnArr2: [],
       targetArr2: [],
-      dialogTitle: '详情'
+      dialogTitle: '详情',
+      singleDetail: false,
+      singleDetailData: {
+        整体评分:'',
+        功能丰富性:"",
+        功能逻辑:'',
+        使用便捷性:'',
+        视觉效果:'',
+        功能稳定性:'',
+        安全性:''
+      },
+      singleDetailTitle:''
     }
   },
   watch: {
@@ -131,6 +161,22 @@ export default {
     this.getChangeData()
   },
   methods: {
+    showSingleDetail (row, prop,c) {
+      const title=this.handleTitle(prop)
+      const obj = row[prop]
+      this.singleDetailTitle=`满意度构成维度: ` + row['00']+' - '+ title
+      this.singleDetailData = {}
+      Object.keys(obj).forEach(key=>{
+        if(obj[key]){
+          this.singleDetailData[key]= Number(obj[key]).toFixed(2)
+        }else{
+          this.singleDetailData[key]='-'
+        }
+
+      })
+  
+      this.singleDetail = true
+    },
     handleValueDialog (value) {
       if (value) {
         return Number(value).toFixed(2)
