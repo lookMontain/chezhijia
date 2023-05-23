@@ -254,14 +254,17 @@ export default {
 
 
 .row4-content-box {
-  height: 425;
+  height: 425px;
   background: #000;
   background-size: 100% 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .row4-right {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
   text-align: left;
   border-radius: 5px;
   width: 600px;

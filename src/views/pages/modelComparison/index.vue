@@ -817,7 +817,8 @@ const column = Object.freeze([
   {
     label: '驾驶辅助',
     prop: '驾驶辅助',
-    isGroup: true
+    isGroup: true,
+    order:5
   }, {
     label: '驾驶辅助开关',
     prop: '驾驶辅助开关',
