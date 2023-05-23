@@ -36,13 +36,23 @@
           <template slot="header" slot-scope="scope">
             <div>车型</div>
           </template>
+          <template slot-scope="scope">
+            <div>
+              <span :style="{
+                color: scope.row[scope.column.property] === '整体评分' ? 'red' : '#2f6ad6',
+                'font-weight': 500
+              }"> {{
+  scope.row[scope.column.property] }}</span>
+            </div>
+          </template>
+
         </el-table-column>
         <el-table-column v-for="item in clumnArr2" :key="item" :prop="String(item)" align="center" min-width="180">
           <template slot="header" slot-scope="scope">
             <div>{{ handleTitle(scope.column.property) }}</div>
           </template>
           <template slot-scope="scope">
-            <span>{{ handleValueDialog(scope.row[scope.column.property])  }}</span>
+            <span>{{ handleValueDialog(scope.row[scope.column.property]) }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -85,6 +95,9 @@ export default {
       }, {
         label: '使用安全',
         prop: '安全性'
+      }, {
+        label: '整体评分',
+        prop: '整体评分'
       }],
       contrast2: [
         {
@@ -118,16 +131,18 @@ export default {
     this.getChangeData()
   },
   methods: {
-    handleValueDialog(value){
+    handleValueDialog (value) {
       if (value) {
         return Number(value).toFixed(2)
+      } else {
+        return '-'
       }
     },
     handleValue (row, property) {
       const value = row[property] && row[property]['整体评分']
       if (value) {
         return Number(value).toFixed(2)
-      }else{
+      } else {
         return '-'
       }
 
@@ -143,10 +158,9 @@ export default {
     },
     showDetail (row, perty) {
       console.log(row, perty)
-      this.dialogTitle = row[perty]
-      debugger
+      this.dialogTitle = `满意度构成维度: ` + row[perty]
       const list = cloneDeep(this.contrast).map(item => {
-        const _dialogTitleValue = item[this.dialogTitle] || {}
+        const _dialogTitleValue = item[row[perty]] || {}
         return {
           'name': item.name,
           ..._dialogTitleValue
@@ -160,7 +174,7 @@ export default {
     },
     getHeight () {
       const innerHeight = window.innerHeight
-      return innerHeight -230
+      return innerHeight - 230
     },
     getElementTop (element) {
       var actualTop = element.offsetTop;
@@ -177,8 +191,8 @@ export default {
       const target = document.getElementById('1' + id)
       const top = this.getElementTop(target)
       const mScrollTop = document.getElementById('menuBox').scrollTop
-      const x= indext===0?80:40
-      bodyWrapper.scrollTo(0, top - 192 - (indext * 48) + mScrollTop-x);
+      const x = indext === 0 ? 80 : 40
+      bodyWrapper.scrollTo(0, top - 192 - (indext * 48) + mScrollTop - x);
       // var scrollPosition = target.offsetTop - height + target.clientHeight;
       // table.scrollToRow(index);
       // table.scrollToRow(lastRowIndex, scrollPosition);

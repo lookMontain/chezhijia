@@ -2,7 +2,7 @@
   <div style="padding:0;" class="page-box">
     <div class="content-box-common">
       <div class="left-img-box">
-        <el-image style="width: 380px; height: 380px" :src="row3Left" fit="fill"></el-image>
+        <el-image style="width: 380px; height: 380px" :src="bg1" fit="fill"></el-image>
       </div>
       <div class="right-rect">
         <div class="row-circle circle">
@@ -37,7 +37,7 @@
     </div>
     <div class="content-box-common">
       <div class="left-img-box2">
-        <el-image style="width: 380px; height: 380px" :src="row3Left" fit="fill"></el-image>
+        <el-image style="width: 380px; height: 380px" :src="bg2" fit="fill"></el-image>
       </div>
       <div class="right-rect2">
         <div class="row-circle2 circle">
@@ -71,6 +71,7 @@
       </div>
     </div>
     <div class="row4-content-box">
+      <el-image style="width: 900px; height: 425px" :src="bg3" fit="fill"></el-image>
       <div class="row4-right">
         <div>
           <div style="color: #FFF;font-size: 34px;font-weight: bold;width: 400px;  margin-bottom: 20px;">基于家庭用车场景的座位自定义与远程调节
@@ -97,14 +98,18 @@
 </template>
   
 <script>
-import row3Left from '@/assets/dashbord/row3-left.png'
+import bg1 from '@/assets/userRequireSpecificResult/bg1.png'
+import bg2 from '@/assets/userRequireSpecificResult/bg2.png'
+import bg3 from '@/assets/userRequireSpecificResult/bg3.png'
 export default {
   name: 'dashboard',
 
   data () {
 
     return {
-      row3Left
+      bg1,
+      bg2,
+      bg3
 
     }
   },
@@ -249,11 +254,11 @@ export default {
 
 
 .row4-content-box {
-  height: 500px;
-  background: url('../../../assets/dashbord/row4-bg.png') no-repeat;
+  height: 425;
+  background: #000;
   background-size: 100% 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
 }
 
 .row4-right {
