@@ -42,6 +42,21 @@
               </el-select>
             </el-form-item>
           </el-form>
+          <div style="position: absolute;right: 50px;top: 80px;">
+            <el-popover placement="bottom-start" title="数据说明" width="300" trigger="hover">
+              <div>
+                <br/>
+                <span style="color:red">1</span>.本页数据为：交互功能体验满意度数据，即用户操作某项功能时的交互体验满意度；
+                <br/>
+                <br/>
+                <span style="color:red">2</span>.交互体验满意度包含6个评价维度，分别为：功能丰富、逻辑合理、交互便捷、视觉美观、功能可靠、使用安全；
+                <br/>
+                <br/>
+                <span style="color:red">3</span>.交互体验满意度的评价，来源于同级别细分市场用户；
+              </div>
+              <i slot="reference" class="el-icon-warning" style="color:#fdab00;font-size: 20px;"></i>
+            </el-popover>
+          </div>
         </div>
         <div v-if='formInline.carType.length' class="yes-sir" :style="{
           height: getHeight() + 'px'
@@ -818,7 +833,7 @@ const column = Object.freeze([
     label: '驾驶辅助',
     prop: '驾驶辅助',
     isGroup: true,
-    order:5
+    order: 5
   }, {
     label: '驾驶辅助开关',
     prop: '驾驶辅助开关',

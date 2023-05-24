@@ -21,7 +21,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column v-for="item in clumnArr" :key="item" :prop="String(item)" align="center" min-width="180">
+      <el-table-column v-for="item in clumnArr" :key="item" :prop="String(item)" align="center" width="180">
         <template slot="header" slot-scope="scope">
           <div>{{ handleTitle(scope.column.property) }}</div>
         </template>
@@ -31,8 +31,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="90%" :before-close="handleClose">
-      <el-table ref="singleTable2" :height="400" :data="targetArr2" :show-header="true" border style="width: 100%">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="80%" :before-close="handleClose">
+
+
+      <el-table ref="singleTable2" :height="400" :data="targetArr2" :show-header="true" border
+        :style="{ width: clumnArr2.length * 180 + 'px' }">
         <el-table-column prop="00" align="center" width="180">
           <template slot="header" slot-scope="scope">
             <div>车型</div>
@@ -42,13 +45,12 @@
               <span :style="{
                 color: scope.row[scope.column.property] === '整体评分' ? 'red' : '#2f6ad6',
                 'font-weight': 500
-              }"> {{
-  scope.row[scope.column.property] }}</span>
+              }"> {{scope.row[scope.column.property] }}</span>
             </div>
           </template>
 
         </el-table-column>
-        <el-table-column v-for="item in clumnArr2" :key="item" :prop="String(item)" align="center" min-width="180">
+        <el-table-column v-for="item in clumnArr2" :key="item" :prop="String(item)" align="center" width="180">
           <template slot="header" slot-scope="scope">
             <div>{{ handleTitle(scope.column.property) }}</div>
           </template>
@@ -57,26 +59,28 @@
           </template>
         </el-table-column>
       </el-table>
+
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" size="mini" @click="dialogVisible = false">关闭窗口</el-button>
       </span>
     </el-dialog>
     <el-dialog :title="singleDetailTitle" :visible.sync="singleDetail" width="900">
       <el-descriptions title="" :column="3" border>
-        <el-descriptions-item label="功能丰富">{{singleDetailData['功能丰富性']}}</el-descriptions-item>
+        <el-descriptions-item label="功能丰富">{{ singleDetailData['功能丰富性'] }}</el-descriptions-item>
         <el-descriptions-item label="逻辑合理">{{ singleDetailData['功能逻辑'] }}</el-descriptions-item>
         <el-descriptions-item label="交互便捷">
-         {{  singleDetailData['使用便捷性']}}
+          {{ singleDetailData['使用便捷性'] }}
         </el-descriptions-item>
         <el-descriptions-item label="视觉美观">
-          {{  singleDetailData['视觉效果']}}
-          </el-descriptions-item>
-        <el-descriptions-item label="功能可靠"> {{  singleDetailData['功能稳定性']}}</el-descriptions-item>
-        <el-descriptions-item label="使用安全">{{  singleDetailData['安全性']}}</el-descriptions-item>
-        <el-descriptions-item label="整体评分"><el-tag size="small">{{singleDetailData['整体评分']}}</el-tag></el-descriptions-item>
+          {{ singleDetailData['视觉效果'] }}
+        </el-descriptions-item>
+        <el-descriptions-item label="功能可靠"> {{ singleDetailData['功能稳定性'] }}</el-descriptions-item>
+        <el-descriptions-item label="使用安全">{{ singleDetailData['安全性'] }}</el-descriptions-item>
+        <el-descriptions-item label="整体评分"><el-tag size="small">{{ singleDetailData['整体评分']
+        }}</el-tag></el-descriptions-item>
       </el-descriptions>
       <span slot="footer" class="dialog-footer">
-        <el-button  size='mini' @click="singleDetail = false">关闭</el-button>
+        <el-button size='mini' @click="singleDetail = false">关闭</el-button>
       </span>
     </el-dialog>
   </div>
@@ -137,15 +141,15 @@ export default {
       dialogTitle: '详情',
       singleDetail: false,
       singleDetailData: {
-        整体评分:'',
-        功能丰富性:"",
-        功能逻辑:'',
-        使用便捷性:'',
-        视觉效果:'',
-        功能稳定性:'',
-        安全性:''
+        整体评分: '',
+        功能丰富性: "",
+        功能逻辑: '',
+        使用便捷性: '',
+        视觉效果: '',
+        功能稳定性: '',
+        安全性: ''
       },
-      singleDetailTitle:''
+      singleDetailTitle: ''
     }
   },
   watch: {
@@ -161,20 +165,20 @@ export default {
     this.getChangeData()
   },
   methods: {
-    showSingleDetail (row, prop,c) {
-      const title=this.handleTitle(prop)
+    showSingleDetail (row, prop, c) {
+      const title = this.handleTitle(prop)
       const obj = row[prop]
-      this.singleDetailTitle=`满意度构成维度: ` + row['00']+' - '+ title
+      this.singleDetailTitle = `满意度构成维度: ` + row['00'] + ' - ' + title
       this.singleDetailData = {}
-      Object.keys(obj).forEach(key=>{
-        if(obj[key]){
-          this.singleDetailData[key]= Number(obj[key]).toFixed(2)
-        }else{
-          this.singleDetailData[key]='-'
+      Object.keys(obj).forEach(key => {
+        if (obj[key]) {
+          this.singleDetailData[key] = Number(obj[key]).toFixed(2)
+        } else {
+          this.singleDetailData[key] = '-'
         }
 
       })
-  
+
       this.singleDetail = true
     },
     handleValueDialog (value) {
@@ -185,6 +189,8 @@ export default {
       }
     },
     handleValue (row, property) {
+      const target = this.column.find(item => item.prop === row['00'] && item.isGroup)
+      if (target) return
       const value = row[property] && row[property]['整体评分']
       if (value) {
         return Number(value).toFixed(2)

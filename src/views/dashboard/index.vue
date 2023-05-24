@@ -83,6 +83,7 @@
       </div>
     </div>
     <div class="row2-content-box">
+      <!-- <el-image style="width: 899px; height: 425px" :src="bg2" fit="fill"></el-image> -->
       <div class="row2-left">
         <div style="margin-left: 20px;">
           <div style="color: #000;"  class="title-top">用户洞察</div>
@@ -119,6 +120,7 @@
       </div>
     </div>
     <div class="row4-content-box">
+      <el-image style="width: 899px; height: 425px" :src="bg4" fit="fill"></el-image>
       <div class="row4-left">
         <div style="margin-left: 20px;">
           <div style="color: #FFF;" class="title-top">场景体验</div>
@@ -185,7 +187,9 @@ import row1RightIcon2 from '@/assets/dashbord/row1-right-item2-icon.png'
 import row1RightIcon3 from '@/assets/dashbord/row1-right-item3-icon.png'
 import row3Left from '@/assets/dashbord/row3-left.png'
 import row5Left from '@/assets/dashbord/row5-left.png'
+import bg4 from '@/assets/dashbord/row4-bg.png'
 import bg6 from '@/assets/dashbord/row6-bg.png'
+import bg2 from '@/assets/dashbord/row2-bg.png'
 export default {
   name: 'dashboard',
 
@@ -199,7 +203,9 @@ export default {
       row1RightIcon3,
       row3Left,
       row5Left,
-      bg6
+      bg6,
+      bg4,
+      bg2
     }
   },
   methods: {
@@ -461,12 +467,16 @@ export default {
 
 .row4-content-box {
   height: 425px;
-  background: url('../../assets/dashbord/row4-bg.png') no-repeat;
+  background-color: #010203;
+  /* background: url('../../assets/dashbord/row4-bg3.png') repeat; */
   background-size: 100% 100%;
   display: flex;
+  justify-content: flex-end;
 }
 
 .row4-left {
+  left: 10px;
+  position: absolute;
   border-radius: 5px;
   width: 480px;
   height: 190px;
