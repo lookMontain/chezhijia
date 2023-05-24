@@ -24,7 +24,8 @@
           <div style="color:#969696">
             我们家小孩9岁，小朋友经常一起做车。他们一上车就是抢占三排，如果没抢到的人做二排还很委屈。会在后面看电子手表啊、玩一些小玩具什么的
           </div>
-          <div style="text-align: right;display: flex;align-items: center;justify-content: flex-end;"> <el-divider></el-divider>问界车主</div>
+          <div style="text-align: right;display: flex;align-items: center;justify-content: flex-end;">
+            <el-divider></el-divider>问界车主</div>
         </div>
         <div class="text-card1" style="margin-top: 20px;border-bottom-right-radius: 20px;">
           <div style="color:#00b5ff;font-size: 20px;font-weight: 700;">创新启迪</div>
@@ -59,7 +60,8 @@
           <div style="color:#969696">
             我们家小孩9岁，小朋友经常一起做车。他们一上车就是抢占三排，如果没抢到的人做二排还很委屈。会在后面看电子手表啊、玩一些小玩具什么的
           </div>
-          <div style="text-align: right;display: flex;align-items: center;justify-content: flex-end;"> <el-divider></el-divider>小鹏车主</div>
+          <div style="text-align: right;display: flex;align-items: center;justify-content: flex-end;">
+            <el-divider></el-divider>小鹏车主</div>
         </div>
         <div class="text-card1" style="margin-top: 20px;border-bottom-right-radius: 20px;">
           <div style="color:#00b5ff;font-size: 20px;font-weight: 700;">创新启迪</div>
@@ -74,7 +76,8 @@
       <el-image style="width: 900px; height: 425px" :src="bg3" fit="fill"></el-image>
       <div class="row4-right">
         <div>
-          <div style="color: #FFF;font-size: 34px;font-weight: bold;width: 400px;  margin-bottom: 20px;">基于家庭用车场景的座位自定义与远程调节
+          <div style="color: #FFF;font-size: 34px;font-weight: bold;width: 400px;  margin-bottom: 20px;">
+            基于家庭用车场景的座位自定义与远程调节
           </div>
           <div class="bottom-text-box3">
             <div class="text-card1" style="border-top-left-radius: 20px;  background: #242731;">
@@ -82,7 +85,8 @@
               <div style="color:#969696">
                 我昨天是二人出行，一排往后挪了很多，后备厢要放东西，三排也都放倒了。今天是四人出行，我需要一个个挪前排，还得挪二排，就很虑
               </div>
-              <div style="text-align: right;display: flex;justify-content: flex-end;align-items: center;"> <el-divider></el-divider>理想车主</div>
+              <div style="text-align: right;display: flex;justify-content: flex-end;align-items: center;">
+                <el-divider></el-divider>理想车主</div>
             </div>
             <div class="text-card1" style="margin-top: 20px;border-bottom-right-radius: 20px; background: #242731;">
               <div style="color:#FFF;font-size: 20px;font-weight: 700;">创新启迪</div>
@@ -94,6 +98,42 @@
         </div>
       </div>
     </div>
+    <div class="content-box-common" style="    display: flex;justify-content: center;align-items: center;">
+      <div class="right-rect2" style="width: 95%;">
+        <div class="row-circle2 circle">
+        </div>
+        <div class="right-text-box2">
+          <div class="right-text-top">
+            <div style="font-size: 40px;font-weight: 800;margin-right: 10px;">个性化内容定制推送及</div>
+          </div>
+          <div style="font-size: 40px;font-weight: 800;margin-right: 10px;">
+            主动智能交互
+          </div>
+        </div>
+      </div>
+      <div style="position: absolute;bottom: 20px;left: 50px;">
+        <el-image style="width: 405px; height: 230px" :src="treebg" fit="fill"></el-image>
+      </div>
+      <div style="height: 450px;display: flex;">
+        <div style="display: flex;flex-direction: column;justify-content: flex-end; margin-right: 10px;">
+          <el-image style="width: 110; height: 207px" :src="center1" fit="fill"></el-image>
+        </div>
+        <div>
+          <el-image style="width: 110; height: 207px;margin-top: 135px;" :src="center2" fit="fill"></el-image>
+        </div>
+
+      </div>
+      <div style="position: absolute; right: 60px; top:120px; width: 550px;">
+        <div style="font-size: 20px; font-weight: 500; margin-bottom: 16px;">Findings</div>
+        <div style="color:#969696">
+          现在的人生阶段处于单位中高层或私企老板，更习惯于‘听汇报’。目前的人生阶段，也让他们产生了<span style="color:#00b5ff">“掌控感”</span>。更希望车机实现<span style="color:#00b5ff">主动智能交互</span>的同时,对于车机状态,（空调）数值等信息要求：<span style="color:#00b5ff">更丰富全面,（颗粒度）更细致</span>
+        </div>
+      </div>
+      <div style="position: absolute; right: 80px; bottom: 10px;">
+        <div style="text-align: center;font-size: 16px; font-weight: 400; margin-bottom: 20px;">车辆自动检测</div>
+        <el-image style="width: 420; height: 217px" :src="rightBottom" fit="fill"></el-image>
+      </div>
+    </div>
   </div>
 </template>
   
@@ -101,6 +141,10 @@
 import bg1 from '@/assets/userRequireSpecificResult/bg1.png'
 import bg2 from '@/assets/userRequireSpecificResult/bg2.png'
 import bg3 from '@/assets/userRequireSpecificResult/bg3.png'
+import treebg from '@/assets/userRequireSpecificResult/treebg.png'
+import center1 from '@/assets/userRequireSpecificResult/center1.png'
+import center2 from '@/assets/userRequireSpecificResult/center2.png'
+import rightBottom from '@/assets/userRequireSpecificResult/rightBottom.png'
 export default {
   name: 'dashboard',
 
@@ -109,7 +153,11 @@ export default {
     return {
       bg1,
       bg2,
-      bg3
+      bg3,
+      treebg,
+      center1,
+      center2,
+      rightBottom
 
     }
   },
@@ -294,5 +342,4 @@ export default {
   width: 600px;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
-}
-</style>
+}</style>
