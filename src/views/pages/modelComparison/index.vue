@@ -76,7 +76,7 @@
         <div class="empty" v-else :style="{
           height: getHeight() + 'px'
         }">
-          <el-empty description="暂无相关车型"></el-empty>
+          <el-image style="width: 251px; height: 259px" :src="empty" fit="fill"></el-image>
         </div>
 
       </div>
@@ -86,6 +86,7 @@
 
 <script>
 import allData from '../mock/all.json'
+import empty from '@/assets/empty.png'
 const contrast1 = Object.freeze([
   {
     "name": "星越L",
@@ -871,6 +872,7 @@ export default {
   data () {
 
     return {
+      empty,
       contrast, // 对比数据，与平时使用相同
       column,// 左侧名称和顺序
       formInline: {
