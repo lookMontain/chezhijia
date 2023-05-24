@@ -80,7 +80,7 @@
         }}</el-tag></el-descriptions-item>
       </el-descriptions>
       <span slot="footer" class="dialog-footer">
-        <el-button size='mini' @click="singleDetail = false">关闭</el-button>
+        <el-button type="primary" size='mini' @click="singleDetail = false">关闭窗口</el-button>
       </span>
     </el-dialog>
   </div>
