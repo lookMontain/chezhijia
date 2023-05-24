@@ -302,6 +302,7 @@ export default {
 
 
 .row4-content-box {
+  position: relative;
   height: 425px;
   background: #000;
   background-size: 100% 100%;

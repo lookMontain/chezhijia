@@ -312,26 +312,8 @@ export default {
 
 }
 
-.content-box7 {
 
-  height: 800px;
-  background: url('../../assets/bg-7.png') no-repeat;
-  background-size: 100%;
-}
 
-.content-box8 {
-
-  height: 800px;
-  background: url('../../assets/bg-8.png') no-repeat;
-  background-size: 100%;
-}
-
-.content-box9 {
-
-  height: 800px;
-  background: url('../../assets/bg-9.png') no-repeat;
-  background-size: 100%;
-}
 
 .bg-purple {
   /* background: #d3dce6; */
